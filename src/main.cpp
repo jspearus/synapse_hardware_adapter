@@ -3,7 +3,7 @@
 
 Servo monServo; // create servo object to control a servo
 #define servoPin 5
-#define servoDown 80
+#define servoDown 85
 #define servoUp 90
 
 String DataIn = "";
