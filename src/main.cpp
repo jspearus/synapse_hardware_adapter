@@ -1,4 +1,7 @@
 #include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_PWMServoDriver.h>
+
 #define S_LIGHT_1 5
 #define S_LIGHT_2 6
 #define S_LIGHT_3 7
@@ -10,6 +13,8 @@
 #define T_LIGHT_4 18
 
 String DataIn = "";
+
+Adafruit_PWMServoDriver street_lights = Adafruit_PWMServoDriver(0x40);
 
 void setup()
 {
@@ -43,33 +48,33 @@ void loop()
     DataIn = Serial.readStringUntil('#');
     if (DataIn == "sOn")
     {
-      digitalWrite(S_LIGHT_1, LOW);
-      delay(3000);
-      digitalWrite(S_LIGHT_2, LOW);
-      delay(3000);
-      digitalWrite(S_LIGHT_3, LOW);
-      delay(3000);
-      digitalWrite(S_LIGHT_4, LOW);
+      street_lights.setPWM(0, 2048, 0);
+      delay(500);
+      street_lights.setPWM(1, 2048, 0);
+      delay(500);
+      street_lights.setPWM(2, 2048, 0);
+      delay(500);
+      street_lights.setPWM(3, 2048, 0);
     }
     else if (DataIn == "sOnq")
     {
-      digitalWrite(S_LIGHT_1, LOW);
-      delay(500);
-      digitalWrite(S_LIGHT_2, LOW);
-      delay(500);
-      digitalWrite(S_LIGHT_3, LOW);
-      delay(500);
-      digitalWrite(S_LIGHT_4, LOW);
+      street_lights.setPWM(0, 2048, 0);
+      delay(100);
+      street_lights.setPWM(1, 2048, 0);
+      delay(100);
+      street_lights.setPWM(2, 2048, 0);
+      delay(100);
+      street_lights.setPWM(3, 2048, 0);
     }
     else if (DataIn == "sOff")
     {
-      digitalWrite(S_LIGHT_1, HIGH);
+      street_lights.setPWM(0, 0, 2048);
       delay(100);
-      digitalWrite(S_LIGHT_2, HIGH);
+      street_lights.setPWM(1, 0, 2048);
       delay(100);
-      digitalWrite(S_LIGHT_3, HIGH);
+      street_lights.setPWM(2, 0, 2048);
       delay(100);
-      digitalWrite(S_LIGHT_4, HIGH);
+      street_lights.setPWM(3, 0, 2048);
     }
     else if (DataIn == "tOn")
     {
