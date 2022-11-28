@@ -7,12 +7,18 @@
 #define T_LIGHT_3 19
 #define T_LIGHT_4 18
 
+#define PWM_FREQ 50
+
 String DataIn = "";
 
 Adafruit_PWMServoDriver street_lights = Adafruit_PWMServoDriver(0x40);
 
 void setup()
 {
+
+  street_lights.begin();
+  street_lights.setPWMFreq(PWM_FREQ);
+
   pinMode(T_LIGHT_1, OUTPUT);
   pinMode(T_LIGHT_2, OUTPUT);
   pinMode(T_LIGHT_3, OUTPUT);
@@ -33,23 +39,23 @@ void loop()
     DataIn = Serial.readStringUntil('#');
     if (DataIn == "sOn")
     {
-      street_lights.setPWM(0, 2048, 0);
+      street_lights.setPWM(0, 1024, 0);
       delay(500);
       street_lights.setPWM(1, 2048, 0);
       delay(500);
-      street_lights.setPWM(2, 2048, 0);
+      street_lights.setPWM(2, 3082, 0);
       delay(500);
-      street_lights.setPWM(3, 2048, 0);
+      street_lights.setPWM(3, 4096, 0);
     }
     else if (DataIn == "sOnq")
     {
-      street_lights.setPWM(0, 2048, 0);
+      street_lights.setPin(0, 1024);
       delay(100);
-      street_lights.setPWM(1, 2048, 0);
+      street_lights.setPin(1, 2048);
       delay(100);
-      street_lights.setPWM(2, 2048, 0);
+      street_lights.setPin(2, 3082);
       delay(100);
-      street_lights.setPWM(3, 2048, 0);
+      street_lights.setPin(3, 4096);
     }
     else if (DataIn == "sOff")
     {
