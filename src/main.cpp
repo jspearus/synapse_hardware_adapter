@@ -2,11 +2,6 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
-#define S_LIGHT_1 5
-#define S_LIGHT_2 6
-#define S_LIGHT_3 7
-#define S_LIGHT_4 8
-
 #define T_LIGHT_1 21
 #define T_LIGHT_2 20
 #define T_LIGHT_3 19
@@ -18,20 +13,10 @@ Adafruit_PWMServoDriver street_lights = Adafruit_PWMServoDriver(0x40);
 
 void setup()
 {
-  pinMode(S_LIGHT_1, OUTPUT);
-  pinMode(S_LIGHT_2, OUTPUT);
-  pinMode(S_LIGHT_3, OUTPUT);
-  pinMode(S_LIGHT_4, OUTPUT);
-
   pinMode(T_LIGHT_1, OUTPUT);
   pinMode(T_LIGHT_2, OUTPUT);
   pinMode(T_LIGHT_3, OUTPUT);
   pinMode(T_LIGHT_4, OUTPUT);
-
-  digitalWrite(S_LIGHT_1, HIGH);
-  digitalWrite(S_LIGHT_2, HIGH);
-  digitalWrite(S_LIGHT_3, HIGH);
-  digitalWrite(S_LIGHT_4, HIGH);
 
   digitalWrite(T_LIGHT_1, HIGH);
   digitalWrite(T_LIGHT_2, HIGH);
