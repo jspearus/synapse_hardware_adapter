@@ -30,6 +30,18 @@ void setup()
   digitalWrite(T_LIGHT_4, HIGH);
 
   Serial.begin(115200);
+  street_lights.setPWM(0, 4096, 0);
+  delay(500);
+  street_lights.setPWM(1, 4096, 0);
+  delay(500);
+  street_lights.setPWM(2, 4096, 0);
+  delay(500);
+  street_lights.setPWM(3, 4096, 0);
+  delay(500);
+  street_lights.setPin(0, 0);
+  street_lights.setPin(1, 0);
+  street_lights.setPin(2, 0);
+  street_lights.setPin(3, 0);
 }
 
 void loop()
@@ -39,33 +51,33 @@ void loop()
     DataIn = Serial.readStringUntil('#');
     if (DataIn == "sOn")
     {
-      street_lights.setPWM(0, 1024, 0);
+      street_lights.setPWM(0, 4096, 0);
       delay(500);
-      street_lights.setPWM(1, 2048, 0);
+      street_lights.setPWM(1, 4096, 0);
       delay(500);
-      street_lights.setPWM(2, 3082, 0);
+      street_lights.setPWM(2, 4096, 0);
       delay(500);
       street_lights.setPWM(3, 4096, 0);
     }
     else if (DataIn == "sOnq")
     {
-      street_lights.setPin(0, 1024);
+      street_lights.setPin(0, 3000);
       delay(100);
-      street_lights.setPin(1, 2048);
+      street_lights.setPin(1, 3500);
       delay(100);
-      street_lights.setPin(2, 3082);
+      street_lights.setPin(2, 3750);
       delay(100);
       street_lights.setPin(3, 4096);
     }
     else if (DataIn == "sOff")
     {
-      street_lights.setPWM(0, 0, 2048);
+      street_lights.setPin(0, 0);
       delay(100);
-      street_lights.setPWM(1, 0, 2048);
+      street_lights.setPin(1, 0);
       delay(100);
-      street_lights.setPWM(2, 0, 2048);
+      street_lights.setPin(2, 0);
       delay(100);
-      street_lights.setPWM(3, 0, 2048);
+      street_lights.setPin(3, 0);
     }
     else if (DataIn == "tOn")
     {
