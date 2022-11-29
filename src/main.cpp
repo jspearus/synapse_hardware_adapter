@@ -7,7 +7,7 @@
 #define T_LIGHT_3 19
 #define T_LIGHT_4 18
 
-#define PWM_FREQ 50
+#define PWM_FREQ 500
 
 String DataIn = "";
 
@@ -38,6 +38,14 @@ void setup()
   delay(500);
   street_lights.setPWM(3, 4096, 0);
   delay(500);
+  street_lights.setPWM(0, 0, 4096);
+  delay(500);
+  street_lights.setPWM(1, 0, 4096);
+  delay(500);
+  street_lights.setPWM(2, 0, 4096);
+  delay(500);
+  street_lights.setPWM(3, 0, 4096);
+  delay(500);
   street_lights.setPin(0, 0);
   street_lights.setPin(1, 0);
   street_lights.setPin(2, 0);
@@ -61,11 +69,11 @@ void loop()
     }
     else if (DataIn == "sOnq")
     {
-      street_lights.setPin(0, 3000);
+      street_lights.setPin(0, 4096);
       delay(100);
-      street_lights.setPin(1, 3500);
+      street_lights.setPin(1, 4096);
       delay(100);
-      street_lights.setPin(2, 3750);
+      street_lights.setPin(2, 4096);
       delay(100);
       street_lights.setPin(3, 4096);
     }
