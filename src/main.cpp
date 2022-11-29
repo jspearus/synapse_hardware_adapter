@@ -46,11 +46,11 @@ void loop()
     if (DataIn == "sOn")
     {
       digitalWrite(S_LIGHT_1, HIGH);
-      delay(1000);
+      delay(1500);
       digitalWrite(S_LIGHT_2, HIGH);
-      delay(1000);
+      delay(1500);
       digitalWrite(S_LIGHT_3, HIGH);
-      delay(1000);
+      delay(1500);
       digitalWrite(S_LIGHT_4, HIGH);
     }
     else if (DataIn == "sOnq")
@@ -66,22 +66,22 @@ void loop()
     else if (DataIn == "sOff")
     {
       digitalWrite(S_LIGHT_1, LOW);
-      delay(250);
+      delay(500);
       digitalWrite(S_LIGHT_2, LOW);
-      delay(250);
+      delay(500);
       digitalWrite(S_LIGHT_3, LOW);
-      delay(250);
+      delay(500);
       digitalWrite(S_LIGHT_4, LOW);
     }
 
     else if (DataIn == "tOn")
     {
       digitalWrite(T_LIGHT_1, LOW);
-      delay(1000);
+      delay(1500);
       digitalWrite(T_LIGHT_2, LOW);
-      delay(1000);
+      delay(1500);
       digitalWrite(T_LIGHT_3, LOW);
-      delay(1000);
+      delay(1500);
       digitalWrite(T_LIGHT_4, LOW);
     }
     else if (DataIn == "tOnq")
