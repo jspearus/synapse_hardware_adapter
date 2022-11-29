@@ -56,11 +56,11 @@ void loop()
     else if (DataIn == "sOnq")
     {
       digitalWrite(S_LIGHT_1, HIGH);
-      delay(250);
+      delay(500);
       digitalWrite(S_LIGHT_2, HIGH);
-      delay(250);
+      delay(500);
       digitalWrite(S_LIGHT_3, HIGH);
-      delay(250);
+      delay(500);
       digitalWrite(S_LIGHT_4, HIGH);
     }
     else if (DataIn == "sOff")
