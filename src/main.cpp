@@ -135,9 +135,149 @@ void loop()
     {
       digitalWrite(OUT1, LOW); // sets the digital pin 13 on
     }
+    else if (DataIn == "out1off")
+    {
+      digitalWrite(OUT1, HIGH); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out2on")
+    {
+      digitalWrite(OUT2, LOW); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out2off")
+    {
+      digitalWrite(OUT2, HIGH); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out3on")
+    {
+      digitalWrite(OUT3, LOW); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out3off")
+    {
+      digitalWrite(OUT3, HIGH); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out4on")
+    {
+      digitalWrite(OUT4, LOW); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out4off")
+    {
+      digitalWrite(OUT4, HIGH); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out5on")
+    {
+      digitalWrite(OUT5, LOW); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out5off")
+    {
+      digitalWrite(OUT5, HIGH); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out6on")
+    {
+      digitalWrite(OUT6, LOW); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out6off")
+    {
+      digitalWrite(OUT6, HIGH); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out7on")
+    {
+      digitalWrite(OUT7, LOW); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out7off")
+    {
+      digitalWrite(OUT7, HIGH); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out8on")
+    {
+      digitalWrite(OUT8, LOW); // sets the digital pin 13 on
+    }
+    else if (DataIn == "out8off")
+    {
+      digitalWrite(OUT8, HIGH); // sets the digital pin 13 on
+    }
     else
     {
-      delay(10);
+      String string = getValue(DataIn, ',', 0);
+      String led = getValue(DataIn, ',', 1);
+      String r = getValue(DataIn, ',', 3);
+      String g = getValue(DataIn, ',', 2);
+      String b = getValue(DataIn, ',', 4);
+      if (string == "0")
+      {
+        pixel2(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+        pixel3(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+        pixel4(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+        pixel5(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+      }
+      else if (string == "1")
+      {
+        if (led.toInt() >= 50)
+        {
+          pixel(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+        }
+        else
+        {
+          pixel(led.toInt(), g.toInt(), r.toInt(), b.toInt());
+        }
+      }
+      else if (string == "2")
+      {
+        pixel2(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+      }
+      else if (string == "3")
+      {
+        pixel3(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+      }
+      else if (string == "4")
+      {
+        pixel4(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+      }
+      else if (string == "5")
+      {
+        pixel5(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+      }
     }
   }
+}
+
+void pixel(int i, int g, int r, int b)
+{
+  pixels1.setPixelColor(i, pixels1.Color(r, g, b));
+}
+
+void pixel2(int i, int r, int g, int b)
+{
+  pixels2.setPixelColor(i, pixels2.Color(r, g, b));
+}
+void pixel3(int i, int r, int g, int b)
+{
+  pixels3.setPixelColor(i, pixels1.Color(r, g, b));
+}
+
+void pixel4(int i, int r, int g, int b)
+{
+  pixels4.setPixelColor(i, pixels2.Color(r, g, b));
+}
+void pixel5(int i, int r, int g, int b)
+{
+  pixels5.setPixelColor(i, pixels1.Color(r, g, b));
+}
+
+String getValue(String data, char separator, int index)
+{
+  int found = 0;
+  int strIndex[] = {0, -1};
+  int maxIndex = data.length() - 1;
+
+  for (int i = 0; i <= maxIndex && found <= index; i++)
+  {
+    if (data.charAt(i) == separator || i == maxIndex)
+    {
+      found++;
+      strIndex[0] = strIndex[1] + 1;
+      strIndex[1] = (i == maxIndex) ? i + 1 : i;
+    }
+  }
+
+  return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
