@@ -136,3 +136,8 @@ void loop()
       digitalWrite(OUT1, LOW); // sets the digital pin 13 on
     }
     else
+    {
+      delay(10);
+    }
+  }
+}
