@@ -42,7 +42,7 @@ String DataIn = "";
 
 void setup()
 {
-  Serial.begin(115200);
+  // Serial.begin(115200);
   Serial1.begin(115200);
 
   pixels1.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
@@ -75,7 +75,7 @@ void loop()
   // pixels.clear(); // Set all pixel colors to 'off'
   if (Serial1.available() > 0)
   {
-    DataIn = Serial.readStringUntil('#');
+    DataIn = Serial1.readStringUntil('#');
     if (DataIn == "show")
     {
       pixels1.show(); // Send the updated pixel colors to the hardware.
