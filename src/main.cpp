@@ -5,12 +5,13 @@
 #define T_LIGHT_3 19
 #define T_LIGHT_4 18
 
-#define S_LIGHT_1 5
-#define S_LIGHT_2 6
+#define S_LIGHT_1 5 // PWM Ctrl
+#define S_LIGHT_2 6 // PWM Ctrl
 #define S_LIGHT_3 7
 #define S_LIGHT_4 8
 
 String DataIn = "";
+boolean flicker = false; // enable street light fflicker mode
 
 void setup()
 {
@@ -63,6 +64,14 @@ void loop()
       delay(500);
       digitalWrite(S_LIGHT_4, HIGH);
     }
+    else if (DataIn == "sOnf")
+    {
+      flicker = true;
+    }
+    else if (DataIn == "sOfff")
+    {
+      flicker = false;
+    }
     else if (DataIn == "sOff")
     {
       digitalWrite(S_LIGHT_1, LOW);
@@ -73,7 +82,6 @@ void loop()
       delay(500);
       digitalWrite(S_LIGHT_4, LOW);
     }
-
     else if (DataIn == "tOn")
     {
       digitalWrite(T_LIGHT_1, LOW);
@@ -104,5 +112,11 @@ void loop()
       delay(500);
       digitalWrite(T_LIGHT_4, HIGH);
     }
+  }
+  else if (flicker == true)
+  {
+    analogWrite(T_LIGHT_1, random(120) + 135);
+    analogWrite(T_LIGHT_2, random(120) + 135);
+    delay(random(100));
   }
 }
