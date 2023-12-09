@@ -7,8 +7,8 @@
 
 #define S_LIGHT_1 5 // PWM Ctrl
 #define S_LIGHT_2 6 // PWM Ctrl
-#define S_LIGHT_3 7
-#define S_LIGHT_4 8
+#define S_LIGHT_3 3 // from 7
+#define S_LIGHT_4 9 // from 8
 
 String DataIn = "";
 boolean flicker = false; // enable street light fflicker mode
@@ -124,6 +124,8 @@ void loop()
   {
     analogWrite(S_LIGHT_1, random(120) + 135);
     analogWrite(S_LIGHT_2, random(120) + 135);
+    analogWrite(S_LIGHT_3, random(120) + 135);
+    analogWrite(S_LIGHT_4, random(120) + 135);
     delay(random(100));
   }
 }
