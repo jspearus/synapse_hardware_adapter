@@ -7,8 +7,8 @@
 
 #define S_LIGHT_1 5 // PWM Ctrl
 #define S_LIGHT_2 6 // PWM Ctrl
-#define S_LIGHT_3 3 // from 7
-#define S_LIGHT_4 9 // from 8
+#define S_LIGHT_3 7
+#define S_LIGHT_4 8
 
 String DataIn = "";
 boolean flicker = false; // enable street light fflicker mode
@@ -84,6 +84,7 @@ void loop()
       digitalWrite(S_LIGHT_1, LOW);
       delay(500);
       digitalWrite(S_LIGHT_2, LOW);
+
       delay(500);
       digitalWrite(S_LIGHT_3, LOW);
       delay(500);
