@@ -71,6 +71,13 @@ void loop()
     else if (DataIn == "sOfff")
     {
       flicker = false;
+      digitalWrite(S_LIGHT_1, LOW);
+      delay(500);
+      digitalWrite(S_LIGHT_2, LOW);
+      delay(500);
+      digitalWrite(S_LIGHT_3, LOW);
+      delay(500);
+      digitalWrite(S_LIGHT_4, LOW);
     }
     else if (DataIn == "sOff")
     {
@@ -115,8 +122,8 @@ void loop()
   }
   else if (flicker == true)
   {
-    analogWrite(T_LIGHT_1, random(120) + 135);
-    analogWrite(T_LIGHT_2, random(120) + 135);
+    analogWrite(S_LIGHT_1, random(120) + 135);
+    analogWrite(S_LIGHT_2, random(120) + 135);
     delay(random(100));
   }
 }
