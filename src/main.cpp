@@ -51,6 +51,12 @@ enum
 const unsigned long shortDelay = 500; // short delay between light / tree events
 const unsigned long longDelay = 1500; // long delay between light / tree events
 unsigned long preMillis = 0;
+enum
+{
+  on,
+  off
+};
+int mode = 0;
 
 void setup()
 {
@@ -110,25 +116,13 @@ void loop()
   }
   else if (DataIn == "tOnq")
   {
-    digitalWrite(T_LIGHT_1, LOW);
-    delay(500);
-    digitalWrite(T_LIGHT_2, LOW);
-    delay(500);
-    digitalWrite(T_LIGHT_3, LOW);
-    delay(500);
-    digitalWrite(T_LIGHT_4, LOW);
-    // treeState = tree1on;
-    // treeLights(0, shortDelay);
+    treeState = tree1on;
+    mode = on;
   }
   else if (DataIn == "tOff")
   {
-    digitalWrite(T_LIGHT_1, HIGH);
-    delay(500);
-    digitalWrite(T_LIGHT_2, HIGH);
-    delay(500);
-    digitalWrite(T_LIGHT_3, HIGH);
-    delay(500);
-    digitalWrite(T_LIGHT_4, HIGH);
+    treeState = tree1off;
+    mode = off;
   }
 
   if (flicker == true)
@@ -139,6 +133,18 @@ void loop()
     analogWrite(S_LIGHT_4, random(120) + 135);
     delay(random(100));
   }
+  else
+  {
+    analogWrite(S_LIGHT_1, random(0));
+    analogWrite(S_LIGHT_2, random(0));
+    analogWrite(S_LIGHT_3, random(0));
+    analogWrite(S_LIGHT_4, random(0));
+  }
+  if (treeState != treeDone)
+  {
+    treeLights(mode, shortDelay);
+  }
+  DataIn = "";
 }
 
 void treeLights(int state, int delayTime)
@@ -179,6 +185,43 @@ void treeLights(int state, int delayTime)
       digitalWrite(T_LIGHT_4, state);
       treeState = treeDone;
       DataIn = "";
+      preMillis = millis();
+      // Serial.println(preMillis);
+      // Serial.println(treeState);
+    }
+  case tree1off:
+    preMillis = millis();
+    digitalWrite(T_LIGHT_1, state);
+    treeState = tree2off;
+    // Serial.println(preMillis);
+    // Serial.println(treeState);
+
+  case tree2off:
+    // Serial.println(treeState);
+    if (millis() - delayTime > preMillis)
+    {
+      preMillis = millis();
+      treeState = tree3off;
+      digitalWrite(T_LIGHT_2, state);
+      // Serial.println(preMillis);
+      // Serial.println(treeState);
+    }
+
+  case tree3off:
+    if (millis() - delayTime > preMillis)
+    {
+      preMillis = millis();
+      digitalWrite(T_LIGHT_3, state);
+      treeState = tree4off;
+      // Serial.println(preMillis);
+      // Serial.println(treeState);
+    }
+
+  case tree4off:
+    if (millis() - delayTime > preMillis)
+    {
+      digitalWrite(T_LIGHT_4, state);
+      treeState = treeDone;
       preMillis = millis();
       // Serial.println(preMillis);
       // Serial.println(treeState);
