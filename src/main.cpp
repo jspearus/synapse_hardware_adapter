@@ -12,7 +12,7 @@
 
 // FUNCTION Declarations
 void treeLights(int state, int delayTime);
-void streetLights(int state, int delayTime);
+void streetLights(int delayTime);
 
 String DataIn = "";
 boolean flicker = false; // enable street light fflicker mode
@@ -102,14 +102,12 @@ void loop()
   if (DataIn == "sOnf")
   {
     flicker = true;
+    lightState = light1on;
   }
   else if (DataIn == "sOfff")
   {
     flicker = false;
-    digitalWrite(S_LIGHT_1, LOW);
-    digitalWrite(S_LIGHT_2, LOW);
-    digitalWrite(S_LIGHT_3, LOW);
-    digitalWrite(S_LIGHT_4, LOW);
+    lightState = light1off;
   }
   else if (DataIn == "sOff")
   {
@@ -177,7 +175,7 @@ void loop()
   }
   if (lightState != lightDone)
   {
-    treeLights(mode, shortDelay);
+    streetLights(shortDelay);
   }
   DataIn = "";
 }
@@ -245,7 +243,7 @@ void treeLights(int state, int delayTime)
     }
   }
 }
-void streetLights(int state, int delayTime)
+void streetLights(int delayTime)
 {
   switch (lightState)
   {
@@ -278,6 +276,7 @@ void streetLights(int state, int delayTime)
     lpreMillis = millis();
     s_LIGHT_1 = false;
     lightState = light2off;
+
   case light2off:
     if (millis() - delayTime > lpreMillis)
     {
