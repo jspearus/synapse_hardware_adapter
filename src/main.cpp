@@ -102,14 +102,20 @@ void loop()
   if (DataIn == "sOnf")
   {
     Serial.println("street lights on");
-    flicker = true;
-    lightState = light1on;
+    // lightState = light1on;
+    s_LIGHT_1 = true;
+    s_LIGHT_2 = true;
+    s_LIGHT_3 = true;
+    s_LIGHT_4 = true;
   }
   else if (DataIn == "sOfff")
   {
     Serial.println("street lights off");
-    flicker = false;
     lightState = light1off;
+    s_LIGHT_1 = false;
+    s_LIGHT_2 = false;
+    s_LIGHT_3 = false;
+    s_LIGHT_4 = false;
   }
   else if (DataIn == "sOff")
   {
@@ -132,52 +138,46 @@ void loop()
     mode = off;
   }
 
-  if (flicker == true)
+  if (s_LIGHT_1 == true)
   {
-    if (s_LIGHT_1 == true)
-    {
-      analogWrite(S_LIGHT_1, random(120) + 135);
-    }
-    if (s_LIGHT_2 == true)
-    {
-      analogWrite(S_LIGHT_2, random(120) + 135);
-    }
-    if (s_LIGHT_3 == true)
-    {
-      analogWrite(S_LIGHT_3, random(120) + 135);
-    }
-    if (s_LIGHT_4 == true)
-    {
-      analogWrite(S_LIGHT_4, random(120) + 135);
-    }
-    delay(random(100));
+    analogWrite(S_LIGHT_1, random(120) + 135);
   }
-  else if (flicker == false)
+  if (s_LIGHT_2 == true)
   {
-    if (s_LIGHT_1 == false)
-    {
-      analogWrite(S_LIGHT_1, 0);
-    }
-    if (s_LIGHT_1 == false)
-    {
-      analogWrite(S_LIGHT_1, 0);
-    }
-    if (s_LIGHT_1 == false)
-    {
-      analogWrite(S_LIGHT_1, 0);
-    }
-    if (s_LIGHT_1 == false)
-    {
-      analogWrite(S_LIGHT_1, 0);
-    }
+    analogWrite(S_LIGHT_2, random(120) + 135);
   }
+  if (s_LIGHT_3 == true)
+  {
+    analogWrite(S_LIGHT_3, random(120) + 135);
+  }
+  if (s_LIGHT_4 == true)
+  {
+    analogWrite(S_LIGHT_4, random(120) + 135);
+  }
+  delay(random(100));
+  if (s_LIGHT_1 == false)
+  {
+    analogWrite(S_LIGHT_1, 0);
+  }
+  if (s_LIGHT_2 == false)
+  {
+    analogWrite(S_LIGHT_2, 0);
+  }
+  if (s_LIGHT_3 == false)
+  {
+    analogWrite(S_LIGHT_3, 0);
+  }
+  if (s_LIGHT_4 == false)
+  {
+    analogWrite(S_LIGHT_4, 0);
+  }
+
   if (treeState != treeDone)
   {
     treeLights(mode, shortDelay);
   }
   if (lightState != lightDone)
   {
-    Serial.println("light State: " + lightState);
     streetLights(shortDelay);
   }
   DataIn = "";
@@ -248,33 +248,37 @@ void treeLights(int state, int delayTime)
 }
 void streetLights(int delayTime)
 {
+  Serial.print("light State: ");
+  Serial.println(lightState);
   switch (lightState)
   {
   case light1on:
     lpreMillis = millis();
     s_LIGHT_1 = true;
     lightState = light2on;
+
   case light2on:
     if (millis() - delayTime > lpreMillis)
     {
-      preMillis = millis();
+      lpreMillis = millis();
       s_LIGHT_2 = true;
       lightState = light3on;
     }
   case light3on:
     if (millis() - delayTime > lpreMillis)
     {
-      preMillis = millis();
+      lpreMillis = millis();
       s_LIGHT_3 = true;
       lightState = light4on;
     }
   case light4on:
     if (millis() - delayTime > lpreMillis)
     {
-      preMillis = millis();
+      lpreMillis = millis();
       s_LIGHT_4 = true;
       lightState = lightDone;
     }
+
   case light1off:
     lpreMillis = millis();
     s_LIGHT_1 = false;
@@ -283,21 +287,21 @@ void streetLights(int delayTime)
   case light2off:
     if (millis() - delayTime > lpreMillis)
     {
-      preMillis = millis();
+      lpreMillis = millis();
       s_LIGHT_2 = false;
       lightState = light3off;
     }
   case light3off:
     if (millis() - delayTime > lpreMillis)
     {
-      preMillis = millis();
+      lpreMillis = millis();
       s_LIGHT_3 = false;
       lightState = light4off;
     }
   case light4off:
     if (millis() - delayTime > lpreMillis)
     {
-      preMillis = millis();
+      lpreMillis = millis();
       s_LIGHT_4 = false;
       lightState = lightDone;
     }
