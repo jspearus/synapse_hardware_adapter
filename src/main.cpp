@@ -101,11 +101,13 @@ void loop()
   }
   if (DataIn == "sOnf")
   {
+    Serial.println("street lights on");
     flicker = true;
     lightState = light1on;
   }
   else if (DataIn == "sOfff")
   {
+    Serial.println("street lights off");
     flicker = false;
     lightState = light1off;
   }
@@ -150,7 +152,7 @@ void loop()
     }
     delay(random(100));
   }
-  else
+  else if (flicker == false)
   {
     if (s_LIGHT_1 == false)
     {
@@ -175,6 +177,7 @@ void loop()
   }
   if (lightState != lightDone)
   {
+    Serial.println("light State: " + lightState);
     streetLights(shortDelay);
   }
   DataIn = "";
