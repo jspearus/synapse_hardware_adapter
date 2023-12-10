@@ -12,9 +12,14 @@
 
 // FUNCTION Declarations
 void treeLights(int state, int delayTime);
+void streetLights(int state, int delayTime);
 
 String DataIn = "";
 boolean flicker = false; // enable street light fflicker mode
+boolean s_LIGHT_1 = false;
+boolean s_LIGHT_2 = false;
+boolean s_LIGHT_3 = false;
+boolean s_LIGHT_4 = false;
 
 unsigned long preTime; // time in milliseconds since system startup
 
@@ -51,6 +56,7 @@ enum
 const unsigned long shortDelay = 500; // short delay between light / tree events
 const unsigned long longDelay = 1500; // long delay between light / tree events
 unsigned long preMillis = 0;
+unsigned long lpreMillis = 0;
 enum
 {
   on,
@@ -82,6 +88,7 @@ void setup()
   digitalWrite(S_LIGHT_4, LOW);
 
   treeState = treeDone;
+  lightState = lightDone;
 
   Serial.begin(115200);
 }
@@ -127,20 +134,48 @@ void loop()
 
   if (flicker == true)
   {
-    analogWrite(S_LIGHT_1, random(120) + 135);
-    analogWrite(S_LIGHT_2, random(120) + 135);
-    analogWrite(S_LIGHT_3, random(120) + 135);
-    analogWrite(S_LIGHT_4, random(120) + 135);
+    if (s_LIGHT_1 == true)
+    {
+      analogWrite(S_LIGHT_1, random(120) + 135);
+    }
+    if (s_LIGHT_2 == true)
+    {
+      analogWrite(S_LIGHT_2, random(120) + 135);
+    }
+    if (s_LIGHT_3 == true)
+    {
+      analogWrite(S_LIGHT_3, random(120) + 135);
+    }
+    if (s_LIGHT_4 == true)
+    {
+      analogWrite(S_LIGHT_4, random(120) + 135);
+    }
     delay(random(100));
   }
   else
   {
-    analogWrite(S_LIGHT_1, random(0));
-    analogWrite(S_LIGHT_2, random(0));
-    analogWrite(S_LIGHT_3, random(0));
-    analogWrite(S_LIGHT_4, random(0));
+    if (s_LIGHT_1 == false)
+    {
+      analogWrite(S_LIGHT_1, 0);
+    }
+    if (s_LIGHT_1 == false)
+    {
+      analogWrite(S_LIGHT_1, 0);
+    }
+    if (s_LIGHT_1 == false)
+    {
+      analogWrite(S_LIGHT_1, 0);
+    }
+    if (s_LIGHT_1 == false)
+    {
+      analogWrite(S_LIGHT_1, 0);
+    }
   }
   if (treeState != treeDone)
+  {
+    treeLights(mode, shortDelay);
+  }
+  if (lightState != lightDone)
   {
     treeLights(mode, shortDelay);
   }
@@ -155,18 +190,13 @@ void treeLights(int state, int delayTime)
     preMillis = millis();
     digitalWrite(T_LIGHT_1, state);
     treeState = tree2on;
-    // Serial.println(preMillis);
-    // Serial.println(treeState);
 
   case tree2on:
-    // Serial.println(treeState);
     if (millis() - delayTime > preMillis)
     {
       preMillis = millis();
       treeState = tree3on;
       digitalWrite(T_LIGHT_2, state);
-      // Serial.println(preMillis);
-      // Serial.println(treeState);
     }
 
   case tree3on:
@@ -175,8 +205,6 @@ void treeLights(int state, int delayTime)
       preMillis = millis();
       digitalWrite(T_LIGHT_3, state);
       treeState = tree4on;
-      // Serial.println(preMillis);
-      // Serial.println(treeState);
     }
 
   case tree4on:
@@ -186,25 +214,18 @@ void treeLights(int state, int delayTime)
       treeState = treeDone;
       DataIn = "";
       preMillis = millis();
-      // Serial.println(preMillis);
-      // Serial.println(treeState);
     }
   case tree1off:
     preMillis = millis();
     digitalWrite(T_LIGHT_1, state);
     treeState = tree2off;
-    // Serial.println(preMillis);
-    // Serial.println(treeState);
 
   case tree2off:
-    // Serial.println(treeState);
     if (millis() - delayTime > preMillis)
     {
       preMillis = millis();
       treeState = tree3off;
       digitalWrite(T_LIGHT_2, state);
-      // Serial.println(preMillis);
-      // Serial.println(treeState);
     }
 
   case tree3off:
@@ -213,8 +234,6 @@ void treeLights(int state, int delayTime)
       preMillis = millis();
       digitalWrite(T_LIGHT_3, state);
       treeState = tree4off;
-      // Serial.println(preMillis);
-      // Serial.println(treeState);
     }
 
   case tree4off:
@@ -223,8 +242,62 @@ void treeLights(int state, int delayTime)
       digitalWrite(T_LIGHT_4, state);
       treeState = treeDone;
       preMillis = millis();
-      // Serial.println(preMillis);
-      // Serial.println(treeState);
+    }
+  }
+}
+void streetLights(int state, int delayTime)
+{
+  switch (lightState)
+  {
+  case light1on:
+    lpreMillis = millis();
+    s_LIGHT_1 = true;
+    lightState = light2on;
+  case light2on:
+    if (millis() - delayTime > lpreMillis)
+    {
+      preMillis = millis();
+      s_LIGHT_2 = true;
+      lightState = light3on;
+    }
+  case light3on:
+    if (millis() - delayTime > lpreMillis)
+    {
+      preMillis = millis();
+      s_LIGHT_3 = true;
+      lightState = light4on;
+    }
+  case light4on:
+    if (millis() - delayTime > lpreMillis)
+    {
+      preMillis = millis();
+      s_LIGHT_4 = true;
+      lightState = lightDone;
+    }
+  case light1off:
+    lpreMillis = millis();
+    s_LIGHT_1 = false;
+    lightState = light2off;
+  case light2off:
+    if (millis() - delayTime > lpreMillis)
+    {
+      preMillis = millis();
+      s_LIGHT_2 = false;
+      lightState = light3off;
+    }
+  case light3off:
+    if (millis() - delayTime > lpreMillis)
+    {
+      preMillis = millis();
+      s_LIGHT_3 = false;
+      lightState = light4off;
+    }
+  case light4off:
+    if (millis() - delayTime > lpreMillis)
+    {
+      preMillis = millis();
+      s_LIGHT_4 = false;
+      lightState = lightDone;
     }
   }
 }
