@@ -55,6 +55,7 @@ const unsigned long shortDelay = 500; // short delay between light / tree events
 const unsigned long longDelay = 1500; // long delay between light / tree events
 unsigned long preMillis = 0;
 unsigned long lpreMillis = 0;
+
 enum
 {
   on,
