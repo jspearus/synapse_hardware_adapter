@@ -7,8 +7,8 @@
 
 #define S_LIGHT_1 5 // PWM Ctrl
 #define S_LIGHT_2 6 // PWM Ctrl
-#define S_LIGHT_3 3
-#define S_LIGHT_4 9
+#define S_LIGHT_3 3 // PWM Ctrl
+#define S_LIGHT_4 9 // PWM Ctrl
 
 // FUNCTION Declarations
 void treeLights(int state, int delayTime);
@@ -21,9 +21,6 @@ boolean s_LIGHT_2 = false;
 boolean s_LIGHT_3 = false;
 boolean s_LIGHT_4 = false;
 
-unsigned long preTime; // time in milliseconds since system startup
-
-unsigned char treeState; // state of tree activation
 enum
 {
   treeStart,
@@ -37,8 +34,8 @@ enum
   tree4off,
   treeDone
 };
+unsigned char treeState; // state of tree activation
 
-unsigned char lightState; // state of light activation
 enum
 {
   lightStart,
@@ -52,6 +49,7 @@ enum
   light4off,
   lightDone
 };
+unsigned char lightState; // state of light activation
 
 const unsigned long shortDelay = 500; // short delay between light / tree events
 const unsigned long longDelay = 1500; // long delay between light / tree events
