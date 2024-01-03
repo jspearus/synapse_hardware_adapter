@@ -20,9 +20,6 @@ boolean s_LIGHT_2 = false;
 boolean s_LIGHT_3 = false;
 boolean s_LIGHT_4 = false;
 
-unsigned long preTime; // time in milliseconds since system startup
-
-unsigned char treeState; // state of tree activation
 enum
 {
   treeStart,
@@ -36,8 +33,8 @@ enum
   tree4off,
   treeDone
 };
+unsigned char treeState; // state of tree activation
 
-unsigned char lightState; // state of light activation
 enum
 {
   lightStart,
@@ -51,11 +48,13 @@ enum
   light4off,
   lightDone
 };
+unsigned char lightState; // state of light activation
 
 const unsigned long shortDelay = 500; // short delay between light / tree events
 const unsigned long longDelay = 1500; // long delay between light / tree events
 unsigned long preMillis = 0;
 unsigned long lpreMillis = 0;
+
 enum
 {
   on,
