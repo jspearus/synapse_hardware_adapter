@@ -7,15 +7,14 @@
 
 #define S_LIGHT_1 5 // PWM Ctrl
 #define S_LIGHT_2 6 // PWM Ctrl
-#define S_LIGHT_3 3
-#define S_LIGHT_4 9
+#define S_LIGHT_3 3 // PWM Ctrl
+#define S_LIGHT_4 9 // PWM Ctrl
 
 // FUNCTION Declarations
 void treeLights(int state, int delayTime);
 void streetLights(int delayTime);
 
 String DataIn = "";
-boolean flicker = false; // enable street light fflicker mode
 boolean s_LIGHT_1 = false;
 boolean s_LIGHT_2 = false;
 boolean s_LIGHT_3 = false;
@@ -185,6 +184,8 @@ void loop()
 
 void treeLights(int state, int delayTime)
 {
+  Serial.print("Tree State: ");
+  Serial.println(treeState);
   switch (treeState)
   {
   case tree1on:
