@@ -5,7 +5,7 @@
 #endif
 
 // Which pin on the Arduino is connected to the NeoPixels?
-#define PIN 3   // On Trinket or Gemma, suggest changing this to 1
+#define PIN 2   // On Trinket or Gemma, suggest changing this to 1
 #define PIN2 5  // On Trinket or Gemma, suggest changing this to 1
 #define PIN3 6  // On Trinket or Gemma, suggest changing this to 1
 #define PIN4 9  // On Trinket or Gemma, suggest changing this to 1
@@ -18,7 +18,7 @@
 #define OUT5 8
 #define OUT6 7
 #define OUT7 4
-#define OUT8 2
+#define OUT8 3
 
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXEL_CENTER 114 // Popular NeoPixel ring size
@@ -211,14 +211,7 @@ void loop()
       }
       else if (string == "1")
       {
-        if (led.toInt() >= 50)
-        {
-          pixel(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-        }
-        else
-        {
-          pixel(led.toInt(), g.toInt(), r.toInt(), b.toInt());
-        }
+        pixel(led.toInt(), r.toInt(), g.toInt(), b.toInt());
       }
       else if (string == "2")
       {
