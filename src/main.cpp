@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
+#include <Wire.h>
 #ifdef __AVR__
 #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
 #endif
@@ -32,6 +33,8 @@ Adafruit_NeoPixel pixels5(NUMPIXELS, PIN5, NEO_GRB + NEO_KHZ800);
 
 String getValue(String data, char separator, int index);
 
+void receiveEvent(int howMany);
+
 void pixel(int i, int r, int g, int b);
 void pixel2(int i, int r, int g, int b);
 void pixel3(int i, int r, int g, int b);
@@ -42,6 +45,12 @@ String DataIn = "";
 
 void setup()
 {
+  // Join I2C bus as slave with address 8
+  Wire.begin(0x8);
+
+  // Call receiveEvent when data received
+  Wire.onReceive(receiveEvent);
+
   Serial.begin(115200);
 
   pixels1.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
@@ -230,6 +239,17 @@ void loop()
         pixel5(led.toInt(), r.toInt(), g.toInt(), b.toInt());
       }
     }
+  }
+}
+// Function that executes whenever data is received from master
+void receiveEvent(int howMany)
+{
+  while (Wire.available())
+  { // loop through all but the last
+    // char c = Wire.read(); // receive byte as a character
+    Serial.print(howMany);
+    Serial.print("  ");
+    Serial.println(Wire.read());
   }
 }
 
