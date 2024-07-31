@@ -4,6 +4,7 @@
 #ifdef __AVR__
 #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
 #endif
+#define BUFFER_SIZE 32 // Adjust based on expected message size
 
 // Which pin on the Arduino is connected to the NeoPixels?
 #define PIN 2   // On Trinket or Gemma, suggest changing this to 1
@@ -42,6 +43,8 @@ void pixel4(int i, int r, int g, int b);
 void pixel5(int i, int r, int g, int b);
 
 String DataIn = "";
+char receivedText[BUFFER_SIZE];
+int index = 0;
 
 void setup()
 {
@@ -81,176 +84,186 @@ void loop()
 {
 
   // pixels.clear(); // Set all pixel colors to 'off'
-  if (Serial.available() > 0)
-  {
-    DataIn = Serial.readStringUntil('#');
-    if (DataIn == "show")
-    {
-      pixels1.show(); // Send the updated pixel colors to the hardware.
-      pixels2.show();
-      pixels3.show();
-      pixels4.show();
-      pixels5.show();
-    }
-    else if (DataIn == "clear")
-    {
-      pixels1.clear();
-      pixels2.clear();
-      pixels3.clear();
-      pixels4.clear();
-      pixels5.clear();
-    }
-    else if (DataIn == "show1")
-    {
-      pixels1.show(); // Send the updated pixel colors to the hardware.
-    }
-    else if (DataIn == "clear1")
-    {
-      pixels1.clear();
-    }
-    else if (DataIn == "show2")
-    {
-      pixels2.show(); // Send the updated pixel colors to the hardware.
-    }
-    else if (DataIn == "clear2")
-    {
-      pixels2.clear();
-    }
-    else if (DataIn == "show3")
-    {
-      pixels3.show(); // Send the updated pixel colors to the hardware.
-    }
-    else if (DataIn == "clear3")
-    {
-      pixels3.clear();
-    }
-    else if (DataIn == "show4")
-    {
-      pixels4.show(); // Send the updated pixel colors to the hardware.
-    }
-    else if (DataIn == "clear4")
-    {
-      pixels4.clear();
-    }
-    else if (DataIn == "show5")
-    {
-      pixels5.show(); // Send the updated pixel colors to the hardware.
-    }
-    else if (DataIn == "clear5")
-    {
-      pixels5.clear();
-    }
-    else if (DataIn == "out1on")
-    {
-      digitalWrite(OUT1, LOW); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out1off")
-    {
-      digitalWrite(OUT1, HIGH); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out2on")
-    {
-      digitalWrite(OUT2, LOW); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out2off")
-    {
-      digitalWrite(OUT2, HIGH); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out3on")
-    {
-      digitalWrite(OUT3, LOW); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out3off")
-    {
-      digitalWrite(OUT3, HIGH); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out4on")
-    {
-      digitalWrite(OUT4, LOW); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out4off")
-    {
-      digitalWrite(OUT4, HIGH); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out5on")
-    {
-      digitalWrite(OUT5, LOW); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out5off")
-    {
-      digitalWrite(OUT5, HIGH); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out6on")
-    {
-      digitalWrite(OUT6, LOW); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out6off")
-    {
-      digitalWrite(OUT6, HIGH); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out7on")
-    {
-      digitalWrite(OUT7, LOW); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out7off")
-    {
-      digitalWrite(OUT7, HIGH); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out8on")
-    {
-      digitalWrite(OUT8, LOW); // sets the digital pin 13 on
-    }
-    else if (DataIn == "out8off")
-    {
-      digitalWrite(OUT8, HIGH); // sets the digital pin 13 on
-    }
-    else
-    {
-      String string = getValue(DataIn, ',', 0);
-      String led = getValue(DataIn, ',', 1);
-      String r = getValue(DataIn, ',', 3);
-      String g = getValue(DataIn, ',', 2);
-      String b = getValue(DataIn, ',', 4);
-      if (string == "0")
-      {
-        pixel2(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-        pixel3(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-        pixel4(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-        pixel5(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-      }
-      else if (string == "1")
-      {
-        pixel(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-      }
-      else if (string == "2")
-      {
-        pixel2(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-      }
-      else if (string == "3")
-      {
-        pixel3(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-      }
-      else if (string == "4")
-      {
-        pixel4(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-      }
-      else if (string == "5")
-      {
-        pixel5(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-      }
-    }
-  }
+  // if (Serial.available() > 0)
+  // {
+  //   DataIn = Serial.readStringUntil('#');
 }
-// Function that executes whenever data is received from master
-void receiveEvent(int howMany)
+void receiveEvent(int numBytes)
 {
   while (Wire.available())
-  { // loop through all but the last
-    // char c = Wire.read(); // receive byte as a character
-    Serial.print(howMany);
-    Serial.print("  ");
-    Serial.println(Wire.read());
+  {
+    char c = Wire.read();
+    // Check for buffer overflow
+    if (index < BUFFER_SIZE - 1)
+    {
+      receivedText[index++] = c;
+    }
   }
+  receivedText[index] = '\0'; // Null-terminate the string
+  index = 0;                  // Reset index for the next message
+
+  // Print the received text to the Serial Monitor
+  // Serial.println(receivedText);
+  DataIn = receivedText;
+  // /////////////////////////////////////////////////////////////////////
+  if (DataIn == "show")
+  {
+    pixels1.show(); // Send the updated pixel colors to the hardware.
+    pixels2.show();
+    pixels3.show();
+    pixels4.show();
+    pixels5.show();
+  }
+  else if (DataIn == "clear")
+  {
+    pixels1.clear();
+    pixels2.clear();
+    pixels3.clear();
+    pixels4.clear();
+    pixels5.clear();
+  }
+  else if (DataIn == "\nshow1")
+  {
+    pixels1.show(); // Send the updated pixel colors to the hardware.
+  }
+  else if (DataIn == "\nclear1")
+  {
+    pixels1.clear();
+  }
+  else if (DataIn == "\nshow2")
+  {
+    pixels2.show(); // Send the updated pixel colors to the hardware.
+  }
+  else if (DataIn == "\nclear2")
+  {
+    pixels2.clear();
+  }
+  else if (DataIn == "\nshow3")
+  {
+    pixels3.show(); // Send the updated pixel colors to the hardware.
+  }
+  else if (DataIn == "\nclear3")
+  {
+    pixels3.clear();
+  }
+  else if (DataIn == "\nshow4")
+  {
+    pixels4.show(); // Send the updated pixel colors to the hardware.
+  }
+  else if (DataIn == "\nclear4")
+  {
+    pixels4.clear();
+  }
+  else if (DataIn == "\nshow5")
+  {
+    pixels5.show(); // Send the updated pixel colors to the hardware.
+  }
+  else if (DataIn == "\nclear5")
+  {
+    pixels5.clear();
+  }
+  else if (DataIn == "out1on")
+  {
+    digitalWrite(OUT1, LOW); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out1off")
+  {
+    digitalWrite(OUT1, HIGH); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out2on")
+  {
+    digitalWrite(OUT2, LOW); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out2off")
+  {
+    digitalWrite(OUT2, HIGH); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out3on")
+  {
+    digitalWrite(OUT3, LOW); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out3off")
+  {
+    digitalWrite(OUT3, HIGH); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out4on")
+  {
+    digitalWrite(OUT4, LOW); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out4off")
+  {
+    digitalWrite(OUT4, HIGH); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out5on")
+  {
+    digitalWrite(OUT5, LOW); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out5off")
+  {
+    digitalWrite(OUT5, HIGH); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out6on")
+  {
+    digitalWrite(OUT6, LOW); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out6off")
+  {
+    digitalWrite(OUT6, HIGH); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out7on")
+  {
+    digitalWrite(OUT7, LOW); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out7off")
+  {
+    digitalWrite(OUT7, HIGH); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out8on")
+  {
+    digitalWrite(OUT8, LOW); // sets the digital pin 13 on
+  }
+  else if (DataIn == "out8off")
+  {
+    digitalWrite(OUT8, HIGH); // sets the digital pin 13 on
+  }
+  else
+  {
+    String string = getValue(DataIn, ',', 1);
+    String led = getValue(DataIn, ',', 2);
+    String r = getValue(DataIn, ',', 4);
+    String g = getValue(DataIn, ',', 3);
+    String b = getValue(DataIn, ',', 5);
+    if (string == "0")
+    {
+      pixel2(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+      pixel3(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+      pixel4(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+      pixel5(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+    }
+    else if (string == "1")
+    {
+      pixel(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+    }
+    else if (string == "2")
+    {
+      pixel2(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+    }
+    else if (string == "3")
+    {
+      pixel3(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+    }
+    else if (string == "4")
+    {
+      pixel4(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+    }
+    else if (string == "5")
+    {
+      pixel5(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+    }
+  }
+  // }
+  DataIn = "";
+  // ///////////////////////////////////////////////////////////////////
 }
 
 void pixel(int i, int g, int r, int b)
