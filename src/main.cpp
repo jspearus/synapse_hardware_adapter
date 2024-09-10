@@ -23,8 +23,8 @@
 #define OUT8 3
 
 // How many NeoPixels are attached to the Arduino?
-#define NUMPIXEL_CENTER 114 // Popular NeoPixel ring size
-#define NUMPIXELS 100       // Popular NeoPixel ring size
+#define NUMPIXEL_CENTER 150 // Popular NeoPixel ring size
+#define NUMPIXELS 150       // Popular NeoPixel ring size
 
 Adafruit_NeoPixel pixels1(NUMPIXEL_CENTER, PIN, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel pixels2(NUMPIXELS, PIN2, NEO_GRB + NEO_KHZ800);
