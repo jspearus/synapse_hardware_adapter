@@ -7,11 +7,11 @@
 #define BUFFER_SIZE 32 // Adjust based on expected message size
 
 // Which pin on the Arduino is connected to the NeoPixels?
-#define PIN 2   // On Trinket or Gemma, suggest changing this to 1
-#define PIN2 5  // On Trinket or Gemma, suggest changing this to 1
-#define PIN3 6  // On Trinket or Gemma, suggest changing this to 1
-#define PIN4 9  // On Trinket or Gemma, suggest changing this to 1
-#define PIN5 10 // On Trinket or Gemma, suggest changing this to 1
+#define PIXEL1 2  // On Trinket or Gemma, suggest changing this to 1
+#define PIXEL2 5  // On Trinket or Gemma, suggest changing this to 1
+#define PIXEL3 6  // On Trinket or Gemma, suggest changing this to 1
+#define PIXEL4 9  // On Trinket or Gemma, suggest changing this to 1
+#define PIXEL5 10 // On Trinket or Gemma, suggest changing this to 1
 
 #define OUT1 18 // Assign pin# to Outlets
 #define OUT2 15
@@ -26,11 +26,11 @@
 #define NUMPIXEL_CENTER 150 // Popular NeoPixel ring size
 #define NUMPIXELS 150       // Popular NeoPixel ring size
 
-Adafruit_NeoPixel pixels1(NUMPIXEL_CENTER, PIN, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel pixels2(NUMPIXELS, PIN2, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel pixels3(NUMPIXELS, PIN3, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel pixels4(NUMPIXELS, PIN4, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel pixels5(NUMPIXELS, PIN5, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels1(NUMPIXEL_CENTER, PIXEL1, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels2(NUMPIXELS, PIXEL2, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels3(NUMPIXELS, PIXEL3, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels4(NUMPIXELS, PIXEL4, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels5(NUMPIXELS, PIXEL5, NEO_GRB + NEO_KHZ800);
 
 String getValue(String data, char separator, int index);
 
