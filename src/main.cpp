@@ -5,20 +5,20 @@
 #endif
 
 // Which pin on the Arduino is connected to the NeoPixels?
-#define PIN 3   // On Trinket or Gemma, suggest changing this to 1
-#define PIN2 5  // On Trinket or Gemma, suggest changing this to 1
-#define PIN3 6  // On Trinket or Gemma, suggest changing this to 1
-#define PIN4 9  // On Trinket or Gemma, suggest changing this to 1
-#define PIN5 10 // On Trinket or Gemma, suggest changing this to 1
+#define PIN 2  // On Trinket or Gemma, suggest changing this to 1
+#define PIN2 3 // On Trinket or Gemma, suggest changing this to 1
+#define PIN3 4 // On Trinket or Gemma, suggest changing this to 1
+#define PIN4 5 // On Trinket or Gemma, suggest changing this to 1
+#define PIN5 6 // On Trinket or Gemma, suggest changing this to 1
 
-#define OUT1 18 // Assign pin# to Outlets
-#define OUT2 15
-#define OUT3 14
+#define OUT1 7 // Assign pin# to Outlets
+#define OUT2 8
+#define OUT3 9
 #define OUT4 16
-#define OUT5 8
-#define OUT6 7
-#define OUT7 4
-#define OUT8 2
+#define OUT5 10
+#define OUT6 14
+#define OUT7 15
+#define OUT8 18
 
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXEL_CENTER 114 // Popular NeoPixel ring size
@@ -43,6 +43,7 @@ String DataIn = "";
 void setup()
 {
   Serial.begin(115200);
+  Serial1.begin(115200);
 
   pixels1.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   pixels2.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
@@ -72,9 +73,9 @@ void loop()
 {
 
   // pixels.clear(); // Set all pixel colors to 'off'
-  if (Serial.available() > 0)
+  if (Serial1.available() > 0)
   {
-    DataIn = Serial.readStringUntil('#');
+    DataIn = Serial1.readStringUntil('#');
     if (DataIn == "show")
     {
       pixels1.show(); // Send the updated pixel colors to the hardware.
