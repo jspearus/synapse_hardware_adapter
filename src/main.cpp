@@ -82,7 +82,6 @@ void loop()
       pixels2.show();
       pixels3.show();
       pixels4.show();
-      pixels5.show();
     }
     else if (DataIn == "clear")
     {
@@ -90,7 +89,6 @@ void loop()
       pixels2.clear();
       pixels3.clear();
       pixels4.clear();
-      pixels5.clear();
     }
     else if (DataIn == "show1")
     {
@@ -205,10 +203,10 @@ void loop()
       String b = getValue(DataIn, ',', 4);
       if (string == "0")
       {
+        pixel(led.toInt(), r.toInt(), g.toInt(), b.toInt());
         pixel2(led.toInt(), r.toInt(), g.toInt(), b.toInt());
         pixel3(led.toInt(), r.toInt(), g.toInt(), b.toInt());
         pixel4(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-        pixel5(led.toInt(), r.toInt(), g.toInt(), b.toInt());
       }
       else if (string == "1")
       {
