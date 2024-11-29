@@ -239,7 +239,7 @@ void loop()
   }
 }
 
-void pixel(int i, int g, int r, int b)
+void pixel(int i, int r, int g, int b)
 {
   pixels1.setPixelColor(i, pixels1.Color(r, g, b));
 }
