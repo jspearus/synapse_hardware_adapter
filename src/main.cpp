@@ -11,11 +11,11 @@
 #define PIN4 5 // On Trinket or Gemma, suggest changing this to 1
 #define PIN5 6 // On Trinket or Gemma, suggest changing this to 1
 
-#define OUT1 7 // Assign pin# to Outlets
+#define OUT1 9 // Assign pin# to Outlets
 #define OUT2 8
-#define OUT3 9
-#define OUT4 16
-#define OUT5 10
+#define OUT3 7
+#define OUT4 10
+#define OUT5 16
 #define OUT6 14
 #define OUT7 15
 #define OUT8 18
@@ -210,14 +210,7 @@ void loop()
       }
       else if (string == "1")
       {
-        if (led.toInt() >= 50)
-        {
-          pixel(led.toInt(), r.toInt(), g.toInt(), b.toInt());
-        }
-        else
-        {
-          pixel(led.toInt(), g.toInt(), r.toInt(), b.toInt());
-        }
+        pixel(led.toInt(), r.toInt(), g.toInt(), b.toInt());
       }
       else if (string == "2")
       {
@@ -233,7 +226,14 @@ void loop()
       }
       else if (string == "5")
       {
-        pixel5(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+        if (led.toInt() >= 50)
+        {
+          pixel5(led.toInt(), r.toInt(), g.toInt(), b.toInt());
+        }
+        else
+        {
+          pixel5(led.toInt(), g.toInt(), r.toInt(), b.toInt());
+        }
       }
     }
   }
