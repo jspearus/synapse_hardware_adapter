@@ -21,7 +21,7 @@
 #define OUT8 18
 
 // How many NeoPixels are attached to the Arduino?
-#define NUMPIXEL_CENTER 114 // Popular NeoPixel ring size
+#define NUMPIXEL_CENTER 140 // Popular NeoPixel ring size
 #define NUMPIXELS 100       // Popular NeoPixel ring size
 
 Adafruit_NeoPixel pixels1(NUMPIXEL_CENTER, PIN, NEO_GRB + NEO_KHZ800);
@@ -42,7 +42,6 @@ String DataIn = "";
 
 void setup()
 {
-  Serial.begin(115200);
   Serial1.begin(115200);
 
   pixels1.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
@@ -198,8 +197,8 @@ void loop()
     {
       String string = getValue(DataIn, ',', 0);
       String led = getValue(DataIn, ',', 1);
-      String r = getValue(DataIn, ',', 3);
-      String g = getValue(DataIn, ',', 2);
+      String r = getValue(DataIn, ',', 2);
+      String g = getValue(DataIn, ',', 3);
       String b = getValue(DataIn, ',', 4);
       if (string == "0")
       {
