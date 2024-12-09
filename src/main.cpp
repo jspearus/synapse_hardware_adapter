@@ -75,6 +75,7 @@ void loop()
   if (Serial1.available() > 0)
   {
     DataIn = Serial1.readStringUntil('#');
+
     if (DataIn == "show")
     {
       pixels1.show(); // Send the updated pixel colors to the hardware.
