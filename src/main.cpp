@@ -33,23 +33,6 @@ void setup()
   Serial1.begin(115200);
 
   pixels1.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
-
-  pinMode(OUT1, OUTPUT);
-  pinMode(OUT2, OUTPUT);
-  pinMode(OUT3, OUTPUT);
-  pinMode(OUT4, OUTPUT);
-  pinMode(OUT5, OUTPUT);
-  pinMode(OUT6, OUTPUT);
-  pinMode(OUT7, OUTPUT);
-  pinMode(OUT8, OUTPUT);
-  digitalWrite(OUT1, HIGH); // sets the digital pin 13 off
-  digitalWrite(OUT2, HIGH); // sets the digital pin 13 off
-  digitalWrite(OUT3, HIGH); // sets the digital pin 13 off
-  digitalWrite(OUT4, HIGH); // sets the digital pin 13 off
-  digitalWrite(OUT5, HIGH); // sets the digital pin 13 off
-  digitalWrite(OUT6, HIGH); // sets the digital pin 13 off
-  digitalWrite(OUT7, HIGH); // sets the digital pin 13 off
-  digitalWrite(OUT8, HIGH); // sets the digital pin 13 off
 }
 
 void loop()
