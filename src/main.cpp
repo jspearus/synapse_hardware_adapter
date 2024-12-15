@@ -5,7 +5,11 @@
 #endif
 
 // Which pin on the Arduino is connected to the NeoPixels?
-#define PIN 2 // On Trinket or Gemma, suggest changing this to 1
+#define PIN 2  // On Trinket or Gemma, suggest changing this to 1
+#define PIN2 3 // On Trinket or Gemma, suggest changing this to 1
+#define PIN3 4 // On Trinket or Gemma, suggest changing this to 1
+#define PIN4 5 // On Trinket or Gemma, suggest changing this to 1
+#define PIN5 6 // On Trinket or Gemma, suggest changing this to 1
 
 #define OUT1 9 // Assign pin# to Outlets
 #define OUT2 8
